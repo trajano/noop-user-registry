@@ -10,6 +10,8 @@
     <artifactId>noop-user-registry</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <name>no-op User Registry</name>
+    <description>A UserRegistry implementation that will pass all validations.</description>
     <modules>
         <module>net.trajano.websphere.noopuserregistry</module>
         <module>net.trajano.websphere.noopuserregistry.feature</module>
