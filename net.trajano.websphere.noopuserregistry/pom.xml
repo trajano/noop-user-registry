@@ -7,6 +7,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>net.trajano.websphere.noopuserregistry</artifactId>
+    <packaging>bundle</packaging>
     <dependencies>
         <dependency>
             <groupId>com.ibm.websphere.appserver.api</groupId>
@@ -20,14 +21,6 @@
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
                 <extensions>true</extensions>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>bundle</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
