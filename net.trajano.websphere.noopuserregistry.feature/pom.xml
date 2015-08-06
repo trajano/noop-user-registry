@@ -23,6 +23,7 @@
                 <version>1.0.0</version>
                 <extensions>true</extensions>
                 <configuration>
+                    <generateManifest>true</generateManifest>
                     <instructions>
                         <IBM-Feature-Version>2</IBM-Feature-Version>
                         <IBM-ShortName>net.trajano.websphere.noopuserregistry</IBM-ShortName>

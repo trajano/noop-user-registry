@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1438891547035
+Build-Jdk: 1.8.0_31
+Bundle-Blueprint: OSGI-INF/blueprint/noop-user-registry.xml
+Bundle-Description: Trajano is an IT Consulting/Contracting firm special
+ ising in end-to-end enterprise architecture.
+Bundle-DocURL: http://www.trajano.net/
+Bundle-License: http://www.eclipse.org/legal/epl-v10.html
+Bundle-ManifestVersion: 2
+Bundle-Name: net.trajano.websphere.noopuserregistry
+Bundle-SymbolicName: net.trajano.websphere.noopuserregistry
+Bundle-Vendor: Trajano
+Bundle-Version: 0.0.1.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Service: com.ibm.websphere.security.UserRegistry
+Import-Package: com.ibm.websphere.security;version="[1.1,2)",com.ibm.web
+ sphere.security.cred;version="[1.2,2)",javax.naming,javax.naming.ldap,j
+ avax.security.auth.x500,org.osgi.service.blueprint;version="[1.0.0,2.0.
+ 0)"
+Originally-Created-By: Apache Maven Bundle Plugin
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.7))"
+Tool: Bnd-2.4.1.201501161923
