@@ -2,20 +2,33 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <groupId>net.trajano.websphere</groupId>
-    <artifactId>noop-user-registry</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+        <groupId>net.trajano.websphere</groupId>
+        <artifactId>noop-user-registry</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>net.trajano.websphere.noopuserregistry.feature</artifactId>
     <packaging>esa</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>net.trajano.websphere.noopuserregistry</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
     <build>
         <plugins>
- <plugin>
-        <groupId>org.apache.aries</groupId>
-        <artifactId>esa-maven-plugin</artifactId>
-        <version>1.0.0</version>
-        <extensions>true</extensions>
-      </plugin>        </plugins>
-	
+            <plugin>
+                <groupId>org.apache.aries</groupId>
+                <artifactId>esa-maven-plugin</artifactId>
+                <version>1.0.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <IBM-Feature-Version>2</IBM-Feature-Version>
+                        <IBM-ShortName>net.trajano.websphere.noopuserregistry</IBM-ShortName>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
-  </project>
+</project>
