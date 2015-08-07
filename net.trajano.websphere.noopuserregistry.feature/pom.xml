@@ -25,8 +25,10 @@
                 <configuration>
                     <generateManifest>true</generateManifest>
                     <instructions>
+                        <Subsystem-SymbolicName>${project.artifactId}; visibility:=public</Subsystem-SymbolicName>
+                        <Subsystem-Type>osgi.subsystem.feature</Subsystem-Type>
                         <IBM-Feature-Version>2</IBM-Feature-Version>
-                        <IBM-ShortName>net.trajano.websphere.noopuserregistry</IBM-ShortName>
+                        <IBM-ShortName>net.trajano.websphere.noopuserregistry-1.0</IBM-ShortName>
                     </instructions>
                 </configuration>
             </plugin>
