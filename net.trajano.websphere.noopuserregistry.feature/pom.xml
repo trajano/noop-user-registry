@@ -26,6 +26,7 @@
                     <generateManifest>true</generateManifest>
                     <instructions>
                         <Subsystem-SymbolicName>${project.artifactId}; visibility:=public</Subsystem-SymbolicName>
+                        <Subsystem-Name>No-op User Registry</Subsystem-Name>
                         <Subsystem-Type>osgi.subsystem.feature</Subsystem-Type>
                         <IBM-Feature-Version>2</IBM-Feature-Version>
                         <IBM-ShortName>net.trajano.websphere.noopuserregistry-1.0</IBM-ShortName>

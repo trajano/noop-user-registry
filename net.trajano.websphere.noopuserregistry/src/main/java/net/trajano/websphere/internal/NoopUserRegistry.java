@@ -239,6 +239,7 @@ public class NoopUserRegistry implements
             UserRegistry.class,
             this,
             getDefaults());
+        System.out.println("config=" + configRef + " cur=" + curRef);
     }
 
     /**
