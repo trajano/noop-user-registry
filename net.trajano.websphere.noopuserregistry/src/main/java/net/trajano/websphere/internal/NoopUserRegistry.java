@@ -6,9 +6,10 @@ import java.rmi.RemoteException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.Hashtable;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
 
 import javax.naming.InvalidNameException;
 import javax.naming.ldap.LdapName;
@@ -31,7 +32,21 @@ public class NoopUserRegistry implements
     UserRegistry,
     ManagedService {
 
-    private final String CFG_PID = "noopUserRegistry";
+    /**
+     * Requested groups for the thread. This gets populated on invocations of
+     * {@link #isValidGroup(String)}.
+     */
+    private final ThreadLocal<Set<String>> groupsTL = new ThreadLocal<Set<String>>() {
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        protected Set<String> initialValue() {
+
+            return new HashSet<>();
+        }
+    };
 
     @Override
     public String checkPassword(final String userSecurityName,
@@ -58,16 +73,6 @@ public class NoopUserRegistry implements
         final Result result = new Result();
         result.setList(emptyList());
         return result;
-    }
-
-    /**
-     * use this to set useful default values for user configuration, if desired
-     */
-    private Dictionary<String, ?> getDefaults() {
-
-        final Dictionary<String, String> defaults = new Hashtable<>();
-        defaults.put(org.osgi.framework.Constants.SERVICE_PID, CFG_PID);
-        return defaults;
     }
 
     @Override
@@ -128,7 +133,7 @@ public class NoopUserRegistry implements
         CustomRegistryException,
         RemoteException {
 
-        return new ArrayList<>(); // Apparently needs to be mutable
+        return new ArrayList<>(groupsTL.get());
     }
 
     @Override
@@ -187,6 +192,7 @@ public class NoopUserRegistry implements
     public boolean isValidGroup(final String groupSecurityName) throws CustomRegistryException,
         RemoteException {
 
+        groupsTL.get().add(groupSecurityName);
         return true;
     }
 
