@@ -71,7 +71,7 @@ public class NoopUserRegistry implements
     /**
      * use this to set useful default values for user configuration, if desired
      */
-    Dictionary<String, ?> getDefaults() {
+    private Dictionary<String, ?> getDefaults() {
 
         final Dictionary<String, String> defaults = new Hashtable<>();
         defaults.put(org.osgi.framework.Constants.SERVICE_PID, CFG_PID);
