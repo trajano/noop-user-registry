@@ -14,9 +14,6 @@ import javax.naming.InvalidNameException;
 import javax.naming.ldap.LdapName;
 import javax.naming.ldap.Rdn;
 
-import org.osgi.framework.BundleActivator;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.ConfigurationException;
 import org.osgi.service.cm.ManagedService;
 
@@ -32,14 +29,9 @@ import com.ibm.websphere.security.cred.WSCredential;
 
 public class NoopUserRegistry implements
     UserRegistry,
-    BundleActivator,
     ManagedService {
 
     private final String CFG_PID = "noopUserRegistry";
-
-    private ServiceRegistration<ManagedService> configRef = null;
-
-    private ServiceRegistration<UserRegistry> curRef = null;
 
     @Override
     public String checkPassword(final String userSecurityName,
@@ -223,39 +215,6 @@ public class NoopUserRegistry implements
         }
 
         throw new CertificateMapFailedException("No valid CN in any certificate");
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void start(final BundleContext context) throws Exception {
-
-        configRef = context.registerService(
-            ManagedService.class,
-            this,
-            getDefaults());
-        curRef = context.registerService(
-            UserRegistry.class,
-            this,
-            getDefaults());
-        System.out.println("config=" + configRef + " cur=" + curRef);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void stop(final BundleContext context) throws Exception {
-
-        if (configRef != null) {
-            configRef.unregister();
-            configRef = null;
-        }
-        if (curRef != null) {
-            curRef.unregister();
-            curRef = null;
-        }
     }
 
     /**

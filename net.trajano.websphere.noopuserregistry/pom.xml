@@ -35,7 +35,7 @@
                 <extensions>true</extensions>
                 <configuration>
                     <instructions>
-                        <Bundle-Activator>net.trajano.websphere.internal.NoopUserRegistry</Bundle-Activator>
+                        <Service-Component>OSGI-INF/NoopUserRegistry.xml</Service-Component>
                     </instructions>
                 </configuration>
             </plugin>

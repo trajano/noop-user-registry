@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="NoopUserRegistry">
+	<implementation class="net.trajano.websphere.internal.NoopUserRegistry" />
+	<service>
+		<provide interface="com.ibm.websphere.security.UserRegistry" />
+	</service>
+</component>
