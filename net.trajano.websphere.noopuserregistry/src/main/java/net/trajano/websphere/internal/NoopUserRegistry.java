@@ -5,7 +5,6 @@ import static java.util.Collections.emptyList;
 import java.rmi.RemoteException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
@@ -14,9 +13,6 @@ import java.util.Set;
 import javax.naming.InvalidNameException;
 import javax.naming.ldap.LdapName;
 import javax.naming.ldap.Rdn;
-
-import org.osgi.service.cm.ConfigurationException;
-import org.osgi.service.cm.ManagedService;
 
 import com.ibm.websphere.security.CertificateMapFailedException;
 import com.ibm.websphere.security.CertificateMapNotSupportedException;
@@ -29,8 +25,7 @@ import com.ibm.websphere.security.UserRegistry;
 import com.ibm.websphere.security.cred.WSCredential;
 
 public class NoopUserRegistry implements
-    UserRegistry,
-    ManagedService {
+    UserRegistry {
 
     /**
      * Requested groups for the thread. This gets populated on invocations of
@@ -223,11 +218,4 @@ public class NoopUserRegistry implements
         throw new CertificateMapFailedException("No valid CN in any certificate");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void updated(final Dictionary<String, ?> properties) throws ConfigurationException {
-
-    }
 }
