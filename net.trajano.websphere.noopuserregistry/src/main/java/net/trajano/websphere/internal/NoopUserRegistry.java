@@ -17,9 +17,7 @@ import javax.naming.ldap.Rdn;
 import com.ibm.websphere.security.CertificateMapFailedException;
 import com.ibm.websphere.security.CertificateMapNotSupportedException;
 import com.ibm.websphere.security.CustomRegistryException;
-import com.ibm.websphere.security.EntryNotFoundException;
 import com.ibm.websphere.security.NotImplementedException;
-import com.ibm.websphere.security.PasswordCheckFailedException;
 import com.ibm.websphere.security.Result;
 import com.ibm.websphere.security.UserRegistry;
 import com.ibm.websphere.security.cred.WSCredential;
@@ -31,34 +29,17 @@ public class NoopUserRegistry implements
      * Requested groups for the thread. This gets populated on invocations of
      * {@link #isValidGroup(String)}.
      */
-    private final ThreadLocal<Set<String>> groupsTL = new ThreadLocal<Set<String>>() {
-
-        /**
-         * {@inheritDoc}
-         */
-        @Override
-        protected Set<String> initialValue() {
-
-            return new HashSet<>();
-        }
-    };
+    private ThreadLocal<Set<String>> groupsTL;
 
     @Override
     public String checkPassword(final String userSecurityName,
-        final String password)
-            throws PasswordCheckFailedException,
-            CustomRegistryException,
-            RemoteException {
+        final String password) {
 
         return userSecurityName;
     }
 
     @Override
-    public WSCredential createCredential(final String userSecurityName)
-        throws NotImplementedException,
-        EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public WSCredential createCredential(final String userSecurityName) {
 
         return null;
     }
@@ -71,129 +52,125 @@ public class NoopUserRegistry implements
     }
 
     @Override
-    public String getGroupDisplayName(final String groupSecurityName)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public String getGroupDisplayName(final String groupSecurityName) {
 
         return groupSecurityName;
     }
 
     @Override
     public Result getGroups(final String pattern,
-        final int limit) throws CustomRegistryException,
-            RemoteException {
+        final int limit) {
 
         return emptyResult();
     }
 
     @Override
-    public String getGroupSecurityName(final String uniqueGroupId)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public String getGroupSecurityName(final String uniqueGroupId) {
 
         return uniqueGroupId;
     }
 
     @Override
-    public List<String> getGroupsForUser(final String groupSecurityName)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public List<String> getGroupsForUser(final String groupSecurityName) {
 
         return emptyList();
     }
 
     @Override
-    public String getRealm() throws CustomRegistryException,
-        RemoteException {
+    public String getRealm() {
 
         return "customRealm"; // documentation says can be null, but should
                               // really be non-null!
     }
 
     @Override
-    public String getUniqueGroupId(final String groupSecurityName)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public String getUniqueGroupId(final String groupSecurityName) {
 
         return groupSecurityName;
     }
 
+    /**
+     * {@inheritDoc} The contents of the collected group names are returned in
+     * {@link List} form.
+     *
+     * @return groups set as a {@link List}
+     */
     @Override
-    public List<String> getUniqueGroupIds(final String uniqueUserId)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public List<String> getUniqueGroupIds(final String uniqueUserId) {
 
         return new ArrayList<>(groupsTL.get());
     }
 
     @Override
-    public String getUniqueUserId(final String userSecurityName)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public String getUniqueUserId(final String userSecurityName) {
 
         return userSecurityName;
     }
 
     @Override
-    public String getUserDisplayName(final String userSecurityName)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public String getUserDisplayName(final String userSecurityName) {
 
         return userSecurityName;
     }
 
     @Override
     public Result getUsers(final String pattern,
-        final int limit) throws CustomRegistryException,
-            RemoteException {
+        final int limit) {
 
         return emptyResult();
     }
 
     @Override
-    public String getUserSecurityName(final String uniqueUserId)
-        throws EntryNotFoundException,
-        CustomRegistryException,
-        RemoteException {
+    public String getUserSecurityName(final String uniqueUserId) {
 
         return uniqueUserId;
     }
 
+    /**
+     * {@inheritDoc}. Throws {@link NotImplementedException}.
+     */
     @Override
     public Result getUsersForGroup(final String paramString,
         final int paramInt)
-            throws NotImplementedException,
-            EntryNotFoundException,
-            CustomRegistryException,
-            RemoteException {
+            throws NotImplementedException {
 
-        return emptyResult();
+        throw new NotImplementedException();
     }
 
+    /**
+     * {@inheritDoc} Initialize the groups {@link ThreadLocal}.
+     */
     @Override
-    public void initialize(final Properties props) throws CustomRegistryException,
-        RemoteException {
+    public void initialize(final Properties props) {
+
+        groupsTL = new ThreadLocal<Set<String>>() {
+
+            /**
+             * @return mutable empty {@link java.util.HashSet}
+             */
+            @Override
+            protected Set<String> initialValue() {
+
+                return new HashSet<>();
+            }
+        };
 
     }
 
+    /**
+     * {@inheritDoc} Adds the group name to the groups {@link ThreadLocal}.
+     *
+     * @return <code>true</code>
+     */
     @Override
-    public boolean isValidGroup(final String groupSecurityName) throws CustomRegistryException,
-        RemoteException {
+    public boolean isValidGroup(final String groupSecurityName) {
 
         groupsTL.get().add(groupSecurityName);
         return true;
     }
 
     @Override
-    public boolean isValidUser(final String userSecurityName) throws CustomRegistryException,
-        RemoteException {
+    public boolean isValidUser(final String userSecurityName) {
 
         return true;
     }
