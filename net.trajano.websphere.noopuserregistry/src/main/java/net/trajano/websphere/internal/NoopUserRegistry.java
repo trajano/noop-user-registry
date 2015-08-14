@@ -70,10 +70,17 @@ public class NoopUserRegistry implements
         return uniqueGroupId;
     }
 
+    /**
+     * {@inheritDoc} The contents of the collected group names are returned in
+     * {@link List} form. This is provided for completeness, but is not used
+     * during the JASPIC authentication process.
+     *
+     * @return groups set as a {@link List}
+     */
     @Override
-    public List<String> getGroupsForUser(final String groupSecurityName) {
+    public List<String> getGroupsForUser(final String userSecurityName) {
 
-        return emptyList();
+        return new ArrayList<>(groupsTL.get());
     }
 
     @Override
