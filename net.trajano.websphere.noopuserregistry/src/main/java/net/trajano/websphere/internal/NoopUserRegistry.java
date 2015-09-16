@@ -29,7 +29,24 @@ public class NoopUserRegistry implements
      * Requested groups for the thread. This gets populated on invocations of
      * {@link #isValidGroup(String)}.
      */
-    private ThreadLocal<Set<String>> groupsTL;
+    private final ThreadLocal<Set<String>> groupsTL;
+
+    /**
+     * Initialize the groups {@link ThreadLocal}.
+     */
+    public NoopUserRegistry() {
+        groupsTL = new ThreadLocal<Set<String>>() {
+
+            /**
+             * @return mutable empty {@link java.util.HashSet}
+             */
+            @Override
+            protected Set<String> initialValue() {
+
+                return new HashSet<>();
+            }
+        };
+    }
 
     @Override
     public String checkPassword(final String userSecurityName,
@@ -145,22 +162,11 @@ public class NoopUserRegistry implements
     }
 
     /**
-     * {@inheritDoc} Initialize the groups {@link ThreadLocal}.
+     * {@inheritDoc}. Originally this was meant to initialize the thread local,
+     * but this method is no longer called as of WLP 8.5.5.7.
      */
     @Override
     public void initialize(final Properties props) {
-
-        groupsTL = new ThreadLocal<Set<String>>() {
-
-            /**
-             * @return mutable empty {@link java.util.HashSet}
-             */
-            @Override
-            protected Set<String> initialValue() {
-
-                return new HashSet<>();
-            }
-        };
 
     }
 
